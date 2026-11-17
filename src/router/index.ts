@@ -44,6 +44,12 @@ export const router = createRouter({
             meta: { title: "Applikationer", section: "applikationer" },
         },
         {
+            path: "/applikationer/per-delsystem",
+            name: "applikationer-delsystem",
+            component: () => import("../views/ApplicationGroupedView.vue"),
+            meta: { title: "Applikationer per delsystem", section: "applikationer" },
+        },
+        {
             path: "/applikationer/:id(\\d+)",
             name: "applikation",
             component: () => import("../views/ApplicationDetailView.vue"),

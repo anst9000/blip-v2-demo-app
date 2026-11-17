@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { defineTableColumns } from "@fkui/vue";
 import PaginatedList from "../components/PaginatedList.vue";
 import { jaNej } from "../composables/formatters";
@@ -47,6 +47,9 @@ const columns = defineTableColumns<ApplikationRad>([
 
 <template>
     <h1>Applikationer</h1>
-    <p>Påhittade applikationer, grupperade per delsystem. Klicka på en rad för att se applikationen.</p>
+    <p>
+        Påhittade applikationer. Klicka på en rad för att se applikationen.
+        <router-link :to="{ name: 'applikationer-delsystem' }">Visa grupperat per delsystem</router-link>.
+    </p>
     <paginated-list list-id="applikationer" :load="applikationRepository.getRows" :columns noun="applikationer" />
 </template>
