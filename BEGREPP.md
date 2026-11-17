@@ -1,8 +1,70 @@
-# Begrepp: paket, leveranser, versioner och mikrotjänster
+# Begrepp: delsystem, applikationer, paket, leveranser, versioner och mikrotjänster
 
-Detta beskriver hur begreppen brukar användas. Din organisation kan definiera några av dem lite
-annorlunda, särskilt "applikation" och "mikrotjänst", så stäm av det som är viktigt mot era egna
-register.
+Detta beskriver hur begreppen brukar användas i stora organisationer med många system. Din
+organisation kan definiera några av dem lite annorlunda, särskilt "applikation" och
+"mikrotjänst", så stäm av det som är viktigt mot era egna register eller er ordlista.
+
+## Vad är ett delsystem?
+
+Ett delsystem är **en del av organisationens samlade IT-system, avgränsad efter ansvar och
+syfte**. Det är ett sätt att dela upp och organisera helheten. Det är inte ett program som går
+att starta.
+
+- **Det grupperar.** Ett delsystem samlar allt som hör till ett område, till exempel en förmån,
+  en process eller en stödfunktion. I exempeldatan är "Abrakadabra" (ABC) ett delsystem med två
+  applikationer.
+- **Det har en ägare.** Ett delsystem har oftast ett ansvarigt team eller en ansvarig chef, som
+  bestämmer vad som händer i det, prioriterar ändringar och svarar för det.
+- **Det är stabilt.** Ett delsystem lever ofta i många år. Applikationer i det läggs till, byts
+  ut och avvecklas, men delsystemet finns kvar.
+- **Det har en kort kod.** Koder som ABC eller WDH syns i applikationsnamn, paketnamn och
+  beställningar, så att man ser var något hör hemma.
+- **Det går inte att installera.** Man kan inte driftsätta eller köra ett delsystem. Man
+  driftsätter dess applikationer.
+
+En liknelse: ett delsystem är som en **avdelning** i ett företag. Den har ett namn, en chef och
+ett uppdrag, men själva arbetet görs av människorna i den, och de människorna är applikationerna.
+
+## Vad är en applikation?
+
+En applikation är **en konkret programvara som byggs, versionshanteras, installeras och körs**.
+Det är något som faktiskt exekverar i en miljö, till exempel test eller produktion.
+
+- **Många former.** Det kan vara ett webbgränssnitt, en backendtjänst, ett batchjobb, en
+  regelmotor eller ett administrationsverktyg. I exempeldatan antyder sista delen av namnet vad
+  den gör: `ABC_SUP_REGLER` är regler, `ABC_SUP_ADMIN` administration och `WDH_BAS_LASKOPIA` en
+  läskopia.
+- **Ett delsystem.** En applikation hör till exakt ett delsystem, och namnet börjar oftast med
+  delsystemets kod.
+- **Den ändras ofta.** Nya versioner byggs, testas och driftsätts om och om igen.
+- **Den har en livscykel.** Den skapas, lever och avvecklas någon gång. Fälten i exempeldatan
+  handlar troligen om detta:
+
+| Fält | Trolig betydelse |
+|---|---|
+| `bestallbar` | Den går att beställa, till exempel beställa en driftsättning eller en miljö för den i era system. |
+| `releaseBunden` | Den levereras bara som en del av den gemensamma, samordnade releasen, inte i egen takt. |
+| `testApplikation` | Den finns för testning (teststöd, stubbar, testdata) och körs inte i produktion som en verksamhetsfunktion. |
+| `arkiverad` | Den är inte längre aktiv och finns bara kvar för historiken. |
+| `avvecklingsRelease` | Den release där den planeras avvecklas (eller avvecklades). |
+
+Stäm av dessa med den som äger ert applikationsregister, eftersom de exakta reglerna är lokala.
+
+## Hur man skiljer dem åt
+
+| Fråga | Delsystem | Applikation |
+|---|---|---|
+| Kan man installera den, starta den, se den köras? | Nej | Ja |
+| Har den versioner? | Nej (den ändras genom sina applikationer) | Ja |
+| Svarar den på "vem är ansvarig?" | Ja | Delvis (via sitt delsystem) |
+| Hur länge lever den? | Många år | Kommer och går |
+| Exempel | ABC "Abrakadabra" | ABC_SUP_REGLER |
+
+**Tumregel:** går det att driftsätta är det en applikation. Är det ett namn på ett
+ansvarsområde som innehåller saker som går att driftsätta, är det ett delsystem.
+
+Kedjan är: **delsystem → innehåller applikationer → varje applikation byggs till paket → paketen
+skickas i leveranser.** Resten av dokumentet förklarar paket, leveranser och versioner.
 
 ## Vad är ett paket (rpm-paket)?
 
