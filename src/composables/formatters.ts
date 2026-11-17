@@ -1,4 +1,3 @@
-import type { ApplicationStatus } from "../types/application";
 import type { CaseStatus } from "../types/case";
 import type { Environment } from "../types/subsystem";
 
@@ -29,17 +28,9 @@ export function caseStatusBadge(status: CaseStatus): BadgeStatus {
     }
 }
 
-export function applicationStatusBadge(status: ApplicationStatus): BadgeStatus {
-    switch (status) {
-        case "I produktion":
-            return "success";
-        case "Under utveckling":
-            return "info";
-        case "Under avveckling":
-            return "warning";
-        default:
-            return "default";
-    }
+/** Yes/no in Swedish, for boolean fields */
+export function jaNej(value: boolean): string {
+    return value ? "Ja" : "Nej";
 }
 
 export function environmentBadge(environment: Environment): BadgeStatus {

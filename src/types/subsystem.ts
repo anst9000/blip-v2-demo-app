@@ -4,8 +4,6 @@ export interface Subsystem {
     id: number;
     name: string;
     code: string;
-    /** The application this subsystem belongs to */
-    applicationId: number;
     team: string;
     environment: Environment;
     version: string;

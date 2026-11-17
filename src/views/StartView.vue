@@ -18,13 +18,13 @@ const sections: Section[] = [
     },
     {
         title: "Applikationer",
-        text: "Se vilka applikationer som finns, vem som äger dem och vilka delsystem de består av.",
+        text: "Se vilka applikationer som finns, vilket delsystem de hör till och om de går att beställa.",
         to: "/applikationer",
         linkText: "Visa applikationer",
     },
     {
         title: "Delsystem",
-        text: "Alla delsystem med team, miljö och version. Varje delsystem länkar till sin applikation.",
+        text: "Alla delsystem med team, miljö och version.",
         to: "/delsystem",
         linkText: "Visa delsystem",
     },

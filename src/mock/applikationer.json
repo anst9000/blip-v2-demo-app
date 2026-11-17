@@ -1,0 +1,536 @@
+[
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2015030000",
+        "bestallbar": true,
+        "id": 9765,
+        "namn": "ABC_SUP_REGLER",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9768,
+        "namn": "ABC_SUP_ADMIN",
+        "releaseBunden": true,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Abrakadabra",
+    "id": "ABC"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2014112000",
+        "bestallbar": true,
+        "id": 9541,
+        "namn": "WDH_BAS_LASKOPIA",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9302,
+        "namn": "WDH_BAS_ADMIN",
+        "releaseBunden": true,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Whiskeyprovning",
+    "id": "WDH"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9104,
+        "namn": "BLS_BAS_ADMIN",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9517,
+        "namn": "BLS_BAS_NOTIS",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9603,
+        "namn": "BLS_BAT_IMPORT",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9781,
+        "namn": "BLS_SUP_PORTAL",
+        "releaseBunden": true,
+        "testApplikation": true
+      }
+    ],
+    "delsystem": "Blåsippan",
+    "id": "BLS"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9103,
+        "namn": "FYR_BAS_BREV",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2026012000",
+        "bestallbar": true,
+        "id": 9996,
+        "namn": "FYR_BAS_EXPORT",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2019101000",
+        "bestallbar": true,
+        "id": 9046,
+        "namn": "FYR_WEB_BREV",
+        "releaseBunden": false,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Fyrtornet",
+    "id": "FYR"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9947,
+        "namn": "GRT_SUP_ARKIV",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9405,
+        "namn": "GRT_SUP_NOTIS",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9762,
+        "namn": "GRT_SUP_RAPPORT",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9824,
+        "namn": "GRT_WEB_BREV",
+        "releaseBunden": true,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9959,
+        "namn": "GRT_WEB_LASKOPIA",
+        "releaseBunden": false,
+        "testApplikation": true
+      }
+    ],
+    "delsystem": "Grottekvarnen",
+    "id": "GRT"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9642,
+        "namn": "HMR_BAS_BREV",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9141,
+        "namn": "HMR_BAT_IMPORT",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2021091500",
+        "bestallbar": false,
+        "id": 9881,
+        "namn": "HMR_BAT_REGLER",
+        "releaseBunden": false,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Hammarslaget",
+    "id": "HMR"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2026111500",
+        "bestallbar": true,
+        "id": 9445,
+        "namn": "KLM_BAS_BETALNING",
+        "releaseBunden": true,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2014101500",
+        "bestallbar": true,
+        "id": 9114,
+        "namn": "KLM_SUP_ARKIV",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2015111500",
+        "bestallbar": false,
+        "id": 9519,
+        "namn": "KLM_WEB_ARKIV",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9899,
+        "namn": "KLM_WEB_SOK",
+        "releaseBunden": false,
+        "testApplikation": true
+      }
+    ],
+    "delsystem": "Kolmilan",
+    "id": "KLM"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9540,
+        "namn": "LNG_INT_ARKIV",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9778,
+        "namn": "LNG_INT_BREV",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2025052000",
+        "bestallbar": false,
+        "id": 9665,
+        "namn": "LNG_SUP_ARKIV",
+        "releaseBunden": true,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Långfärdsskridsko",
+    "id": "LNG"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9685,
+        "namn": "MSK_BAS_ADMIN",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2026071000",
+        "bestallbar": true,
+        "id": 9674,
+        "namn": "MSK_BAT_NOTIS",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9065,
+        "namn": "MSK_INT_REGLER",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9072,
+        "namn": "MSK_SUP_NOTIS",
+        "releaseBunden": false,
+        "testApplikation": true
+      }
+    ],
+    "delsystem": "Myrstacken",
+    "id": "MSK"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2024020100",
+        "bestallbar": true,
+        "id": 9347,
+        "namn": "NRD_INT_BREV",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2014032000",
+        "bestallbar": true,
+        "id": 9399,
+        "namn": "NRD_INT_KALENDER",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2026092000",
+        "bestallbar": true,
+        "id": 9303,
+        "namn": "NRD_INT_RAPPORT",
+        "releaseBunden": true,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2014110100",
+        "bestallbar": false,
+        "id": 9948,
+        "namn": "NRD_INT_STATISTIK",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9473,
+        "namn": "NRD_SUP_SOK",
+        "releaseBunden": true,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Norrskenet",
+    "id": "NRD"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9190,
+        "namn": "PLG_BAS_ARKIV",
+        "releaseBunden": true,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9514,
+        "namn": "PLG_BAT_ADMIN",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9911,
+        "namn": "PLG_SUP_IMPORT",
+        "releaseBunden": false,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Pilgrimsleden",
+    "id": "PLG"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9673,
+        "namn": "SPL_BAS_NOTIS",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2015041500",
+        "bestallbar": true,
+        "id": 9448,
+        "namn": "SPL_SUP_ARKIV",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9134,
+        "namn": "SPL_WEB_SOK",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9576,
+        "namn": "SPL_WEB_STATISTIK",
+        "releaseBunden": false,
+        "testApplikation": true
+      }
+    ],
+    "delsystem": "Spelmanslaget",
+    "id": "SPL"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9306,
+        "namn": "TRN_BAT_STATISTIK",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9109,
+        "namn": "TRN_SUP_RAPPORT",
+        "releaseBunden": false,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9351,
+        "namn": "TRN_WEB_NOTIS",
+        "releaseBunden": true,
+        "testApplikation": false
+      }
+    ],
+    "delsystem": "Tranhusen",
+    "id": "TRN"
+  },
+  {
+    "applikationerna": [
+      {
+        "arkiverad": true,
+        "avvecklingsRelease": null,
+        "bestallbar": false,
+        "id": 9255,
+        "namn": "VLD_BAS_EXPORT",
+        "releaseBunden": false,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2027061000",
+        "bestallbar": true,
+        "id": 9042,
+        "namn": "VLD_BAS_PORTAL",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2016041000",
+        "bestallbar": false,
+        "id": 9830,
+        "namn": "VLD_BAT_BREV",
+        "releaseBunden": true,
+        "testApplikation": false
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": null,
+        "bestallbar": true,
+        "id": 9722,
+        "namn": "VLD_SUP_BETALNING",
+        "releaseBunden": true,
+        "testApplikation": true
+      },
+      {
+        "arkiverad": false,
+        "avvecklingsRelease": "2027010100",
+        "bestallbar": true,
+        "id": 9849,
+        "namn": "VLD_WEB_ARKIV",
+        "releaseBunden": true,
+        "testApplikation": true
+      }
+    ],
+    "delsystem": "Vildhallon",
+    "id": "VLD"
+  }
+]
