@@ -1,4 +1,4 @@
-# Begrepp: delsystem, applikationer, paket, leveranser, versioner och mikrotjänster
+# Begrepp: delsystem, applikationer, paket, leveranser, versioner, mikrotjänster och vägen till en ny miljö
 
 Detta beskriver hur begreppen brukar användas i stora organisationer med många system. Din
 organisation kan definiera några av dem lite annorlunda, särskilt "applikation" och
@@ -64,7 +64,8 @@ Stäm av dessa med den som äger ert applikationsregister, eftersom de exakta re
 ansvarsområde som innehåller saker som går att driftsätta, är det ett delsystem.
 
 Kedjan är: **delsystem → innehåller applikationer → varje applikation byggs till paket → paketen
-skickas i leveranser.** Resten av dokumentet förklarar paket, leveranser och versioner.
+skickas i leveranser.** Resten av dokumentet förklarar paket, leveranser och versioner, och vilka
+steg en leverans går igenom på vägen till en ny miljö.
 
 ## Vad är ett paket (rpm-paket)?
 
@@ -234,6 +235,39 @@ Ett vanligt undantag är **ett paket för tjänsten plus ett separat paket för 
 konfiguration**, så att samma kod kan installeras i alla miljöer med olika inställningar. Om en
 mikrotjänst behöver många paket är det ofta ett tecken på att den egentligen är flera tjänster,
 eller en liten applikation.
+
+## Vägen till en ny miljö: promotion, leveransinformation, beställning, releaseanmälan och installation
+
+I en stor organisation installerar utvecklare inte själva i test eller produktion. Varje ändring
+går samma väg, i samma ordning, så att det alltid går att se vad som installerades, varför och
+vem som godkände det.
+
+1. **Promotion.** Ett paket som har testats och godkänts flyttas till nästa steg, till exempel
+   från test till acceptanstest. Promotionen visar att paketet är redo för nästa mognadsnivå. Den
+   går ett steg i taget: ett paket hoppar inte från test direkt till produktion.
+2. **Leveransinformation.** Teamet beskriver exakt det som promotats: paketen i exakta versioner,
+   nyheter, rättade fel, kända problem och hur man backar om något går fel. På engelska kallas
+   det ofta *release notes*.
+3. **Beställning.** Produktägaren eller releaseansvarig skickar en formell begäran till drift om
+   att installera leveransen i en viss miljö. Leveransinformationen bifogas som bevis på att
+   leveransen är klar. Beställningen är tillståndet att göra jobbet.
+4. **Releaseanmälan.** När beställningen är planerad och godkänd får de som påverkas besked:
+   verksamheten, supporten och användarna. Den säger när ändringen sker, vad den innebär och om
+   det blir avbrott. Ofta skickas ett nytt besked när installationen är klar.
+5. **Installation.** Drift, eller en automatisk pipeline, installerar, konfigurerar och startar
+   paketen på servrarna i målmiljön under det planerade fönstret.
+
+| Svenska | Engelska | Vem gör det? |
+|---|---|---|
+| Promotion | Promotion | Utvecklingsteamet, när testerna är godkända |
+| Leveransinformation | Delivery information / release notes | Utvecklingsteamet |
+| Beställning | Order / deployment request | Produktägare eller releaseansvarig |
+| Releaseanmälan | Release notification | Releaseansvarig, till verksamhet, support och användare |
+| Installation | Installation / deployment | Drift eller en automatisk pipeline |
+
+Ordningen är ett skyddsnät. Varje steg bygger på det förra: man kan inte beskriva något som inte
+är godkänt, inte beställa utan beskrivning, inte meddela en tid utan beställning och inte
+installera utan att de berörda vet om det.
 
 ## Hela bilden
 
