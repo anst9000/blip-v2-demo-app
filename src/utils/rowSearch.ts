@@ -1,6 +1,5 @@
 /*
- * Search and sort rules shared by the browser-side list and the mock server,
- * so both give the same result for the same search and sort order.
+ * Search rules used by the lists.
  */
 
 function isSearchable(key: string, value: unknown): value is string | number {
@@ -29,18 +28,3 @@ export function matchesAllWords(searchText: string, words: string[]): boolean {
     return words.every((word) => searchText.includes(word));
 }
 
-/**
- * Compares two rows the same way as FKUI's FSortFilterDataset: text with
- * localeCompare, numbers numerically, descending by reversing the result.
- */
-export function compareRows<T>(a: T, b: T, attribute: keyof T, ascending: boolean): number {
-    const x = a[attribute];
-    const y = b[attribute];
-    let order = 0;
-    if (typeof x === "number" && typeof y === "number") {
-        order = x - y;
-    } else {
-        order = String(x ?? "").localeCompare(String(y ?? ""));
-    }
-    return ascending ? order : -order;
-}

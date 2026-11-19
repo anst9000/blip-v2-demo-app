@@ -9,7 +9,7 @@ export const SEARCH_DEBOUNCE_MS = 250;
 /**
  * The state of a list (page, page size, search and sort order), kept in the
  * URL so "back" from a detail page returns to the same view:
- * ?sida=3&rader=25&sok=anna&sortera=amount&ordning=fallande
+ * ?sida=3&rader=25&sok=anna&sortera=namn&ordning=fallande
  * Default values are left out of the URL.
  *
  * @param prefix - prefix for the query keys, so several lists can share a page

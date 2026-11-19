@@ -19,25 +19,6 @@ export const router = createRouter({
             meta: { title: "Start", section: "start" },
         },
         {
-            path: "/arenden",
-            name: "arenden",
-            component: () => import("../views/CaseListView.vue"),
-            meta: { title: "Ärenden", section: "arenden" },
-        },
-        {
-            path: "/arenden/server",
-            name: "arenden-server",
-            component: () => import("../views/CaseServerListView.vue"),
-            meta: { title: "Ärenden (server)", section: "arenden" },
-        },
-        {
-            path: "/arenden/:id(\\d+)",
-            name: "arende",
-            component: () => import("../views/CaseDetailView.vue"),
-            props: (route) => ({ id: Number(route.params.id) }),
-            meta: { title: "Ärende", section: "arenden" },
-        },
-        {
             path: "/applikationer",
             name: "applikationer",
             component: () => import("../views/ApplicationListView.vue"),
@@ -55,6 +36,19 @@ export const router = createRouter({
             component: () => import("../views/ApplicationDetailView.vue"),
             props: (route) => ({ id: Number(route.params.id) }),
             meta: { title: "Applikation", section: "applikationer" },
+        },
+        {
+            path: "/leveranser",
+            name: "leveranser",
+            component: () => import("../views/DeliveryListView.vue"),
+            meta: { title: "Leveranser", section: "leveranser" },
+        },
+        {
+            path: "/leveranser/:id(\\d+)",
+            name: "leverans",
+            component: () => import("../views/DeliveryDetailView.vue"),
+            props: (route) => ({ id: Number(route.params.id) }),
+            meta: { title: "Leverans", section: "leveranser" },
         },
         {
             path: "/delsystem",

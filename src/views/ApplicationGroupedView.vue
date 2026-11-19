@@ -5,7 +5,7 @@ import { FMessageBox, FSearchTextField, FTable, defineTableColumns } from "@fkui
 import { useListQuery } from "../composables/useListQuery";
 import { useResource } from "../composables/useResource";
 import { matchesAllWords, searchWords } from "../utils/rowSearch";
-import { jaNej } from "../composables/formatters";
+import { formatRelease, jaNej } from "../composables/formatters";
 import { applikationRepository } from "../repositories/applikationRepository";
 import type { Applikation, ApplikationerSvar } from "../types/applikation";
 
@@ -126,7 +126,13 @@ const columns = defineTableColumns<GruppRad>([
         header: "Avvecklingsrelease",
         type: "text",
         size: "shrink",
-        value: (row) => (row.applikation ? (row.applikation.avvecklingsRelease ?? "–") : ""),
+        value: (row) => {
+            if (!row.applikation) {
+                return "";
+            }
+            const release = row.applikation.avvecklingsRelease;
+            return release ? formatRelease(release) : "–";
+        },
     },
 ]);
 </script>

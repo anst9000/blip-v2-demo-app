@@ -15,8 +15,8 @@ const router = useRouter();
 
 const menuItems: NavigationMenuItem[] = [
     { label: "Start", route: "start" },
-    { label: "Ärenden", route: "arenden" },
     { label: "Applikationer", route: "applikationer" },
+    { label: "Leveranser", route: "leveranser" },
     { label: "Delsystem", route: "delsystem" },
 ];
 

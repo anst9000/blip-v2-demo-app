@@ -1,12 +1,23 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { RouterLink, useRouter } from "vue-router";
-import { defineTableColumns } from "@fkui/vue";
+import { FButton, FSelectField, defineTableColumns } from "@fkui/vue";
 import PaginatedList from "../components/PaginatedList.vue";
-import { jaNej } from "../composables/formatters";
+import { formatRelease, jaNej, releasePassed, today } from "../composables/formatters";
+import { useQueryParam } from "../composables/useQueryParam";
 import { applikationRepository } from "../repositories/applikationRepository";
 import type { ApplikationRad } from "../types/applikation";
 
 const router = useRouter();
+
+/** Shows the release readably; "(passerad)" when an active application is past it */
+function avveckling(row: ApplikationRad): string {
+    if (!row.avvecklingsRelease) {
+        return "–";
+    }
+    const text = formatRelease(row.avvecklingsRelease);
+    return !row.arkiverad && releasePassed(row.avvecklingsRelease) ? `${text} (passerad)` : text;
+}
 
 /* The yes/no columns sort on the boolean (key) and show Ja/Nej (value) */
 const columns = defineTableColumns<ApplikationRad>([
@@ -40,9 +51,64 @@ const columns = defineTableColumns<ApplikationRad>([
         key: "avvecklingsRelease",
         type: "text",
         size: "shrink",
-        value: (row) => row.avvecklingsRelease ?? "–",
+        value: avveckling,
     },
 ]);
+
+/* ---------- Filters, kept in the URL like the search ---------- */
+
+type Flag = "arkiverad" | "bestallbar" | "testApplikation" | "releaseBunden";
+
+const JA_NEJ = ["ja", "nej"] as const;
+
+/** One yes/no filter per flag: "" (all), "ja" or "nej" */
+const flagFilters: Array<{ field: Flag; label: string; value: ReturnType<typeof useQueryParam> }> = [
+    { field: "arkiverad", label: "Arkiverad", value: useQueryParam("arkiverad", JA_NEJ) },
+    { field: "bestallbar", label: "Beställbar", value: useQueryParam("bestallbar", JA_NEJ) },
+    { field: "testApplikation", label: "Testapplikation", value: useQueryParam("test", JA_NEJ) },
+    { field: "releaseBunden", label: "Releasebunden", value: useQueryParam("releasebunden", JA_NEJ) },
+];
+
+const AVVECKLING = ["planerad", "passerad", "ingen"] as const;
+const avvecklingFilter = useQueryParam("avveckling", AVVECKLING);
+
+const hasFilters = computed(() => avvecklingFilter.value !== "" || flagFilters.some((f) => f.value.value !== ""));
+
+function clearFilters(): void {
+    const query = { ...router.currentRoute.value.query };
+    for (const key of ["arkiverad", "bestallbar", "test", "releasebunden", "avveckling", "sida"]) {
+        delete query[key];
+    }
+    void router.replace({ query });
+}
+
+/** Undefined when no filter is chosen, so the list skips filtering */
+const filter = computed(() => {
+    if (!hasFilters.value) {
+        return undefined;
+    }
+    const flags = flagFilters
+        .filter((f) => f.value.value !== "")
+        .map((f) => ({ field: f.field, wanted: f.value.value === "ja" }));
+    const avveckling = avvecklingFilter.value;
+    const todayIso = today();
+    return (row: ApplikationRad): boolean => {
+        if (!flags.every(({ field, wanted }) => row[field] === wanted)) {
+            return false;
+        }
+        const release = row.avvecklingsRelease;
+        switch (avveckling) {
+            case "ingen":
+                return !release;
+            case "planerad":
+                return !!release && !releasePassed(release, todayIso);
+            case "passerad":
+                return !!release && releasePassed(release, todayIso);
+            default:
+                return true;
+        }
+    };
+});
 </script>
 
 <template>
@@ -51,5 +117,53 @@ const columns = defineTableColumns<ApplikationRad>([
         Påhittade applikationer. Klicka på en rad för att se applikationen.
         <router-link :to="{ name: 'applikationer-delsystem' }">Visa grupperat per delsystem</router-link>.
     </p>
-    <paginated-list list-id="applikationer" :load="applikationRepository.getRows" :columns noun="applikationer" />
+    <paginated-list
+        list-id="applikationer"
+        :load="applikationRepository.getRows"
+        :columns
+        :filter
+        noun="applikationer"
+    >
+        <template #filters>
+            <div class="filters" role="group" aria-label="Filter">
+                <div v-for="flag in flagFilters" :key="flag.field" class="filters__field">
+                    <f-select-field v-model="flag.value.value">
+                        <template #label>{{ flag.label }}</template>
+                        <option value="">Alla</option>
+                        <option value="ja">Ja</option>
+                        <option value="nej">Nej</option>
+                    </f-select-field>
+                </div>
+                <div class="filters__field">
+                    <f-select-field v-model="avvecklingFilter">
+                        <template #label>Avvecklingsrelease</template>
+                        <option value="">Alla</option>
+                        <option value="planerad">Planerad</option>
+                        <option value="passerad">Passerad</option>
+                        <option value="ingen">Ingen</option>
+                    </f-select-field>
+                </div>
+                <div v-if="hasFilters" class="filters__clear">
+                    <f-button variant="tertiary" size="small" @click="clearFilters">Rensa filter</f-button>
+                </div>
+            </div>
+        </template>
+    </paginated-list>
 </template>
+
+<style scoped>
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0 1rem;
+}
+
+.filters__field {
+    flex: 0 1 10rem;
+}
+
+.filters__clear {
+    margin-bottom: 1.5rem;
+}
+</style>

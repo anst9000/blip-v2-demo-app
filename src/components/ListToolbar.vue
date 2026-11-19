@@ -5,7 +5,7 @@ import type { ColumnOption } from "../composables/useColumnVisibility";
 import { PAGE_SIZES } from "../composables/useListQuery";
 
 defineProps<{
-    /** Word used in the search label, e.g. "ärenden" */
+    /** Word used in the search label, e.g. "applikationer" */
     noun: string;
     showPageSize: boolean;
     options: ColumnOption[];

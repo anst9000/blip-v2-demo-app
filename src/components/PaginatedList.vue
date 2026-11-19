@@ -1,8 +1,8 @@
 <script setup lang="ts" generic="T extends { id: number }">
 /**
  * A list where all rows are loaded at once and searched, sorted and paged in
- * the browser. See ServerPaginatedList for the version that lets the server
- * do it and only fetches one page at a time.
+ * the browser. An optional `filter` narrows the rows before the search, e.g.
+ * from filter fields shown in the `filters` slot.
  */
 import { computed, markRaw, watch } from "vue";
 import {
@@ -29,12 +29,14 @@ const props = withDefaults(
         load: () => Promise<T[]>;
         /** The first column should be the link to the detail page */
         columns: Array<TableColumn<T, keyof T>>;
-        /** Word used in the caption, e.g. "ärenden" */
+        /** Word used in the caption, e.g. "applikationer" */
         noun: string;
         /** Prefix for the query parameters, so several lists can share a page */
         queryPrefix?: string;
+        /** Keeps only the rows it returns true for; applied before the search */
+        filter?: (row: T) => boolean;
     }>(),
-    { queryPrefix: "" },
+    { queryPrefix: "", filter: undefined },
 );
 
 const { data, loading, error } = useResource(props.load);
@@ -84,11 +86,16 @@ watch(data, (rows) => {
 const filteredData = computed<T[]>(() => {
     const rows = data.value ?? [];
     const words = searchWords(search.value);
-    if (words.length === 0) {
+    const filter = props.filter;
+    if (words.length === 0 && !filter) {
         return markRaw(rows);
     }
-    const index = searchIndex.value;
-    return markRaw(rows.filter((_row, i) => matchesAllWords(index[i], words)));
+    const index = words.length > 0 ? searchIndex.value : [];
+    return markRaw(
+        rows.filter(
+            (row, i) => (!filter || filter(row)) && (words.length === 0 || matchesAllWords(index[i], words)),
+        ),
+    );
 });
 
 const isFiltered = computed(() => filteredData.value.length !== (data.value?.length ?? 0));
@@ -113,6 +120,8 @@ const isFiltered = computed(() => filteredData.value.length !== (data.value?.len
             :options
             @show-all="showAll"
         />
+
+        <slot name="filters" />
 
         <!--
             FSortFilterDataset makes the column headers sortable (FTable talks to it
@@ -159,11 +168,7 @@ const isFiltered = computed(() => filteredData.value.length !== (data.value?.len
                                     </span>
                                 </template>
                                 <template #empty>
-                                    {{
-                                        isFiltered
-                                            ? `Inga ${noun} matchar ”${search}”.`
-                                            : `Inga ${noun} hittades.`
-                                    }}
+                                    {{ isFiltered ? `Inga ${noun} matchar urvalet.` : `Inga ${noun} hittades.` }}
                                 </template>
                             </f-table>
                         </div>

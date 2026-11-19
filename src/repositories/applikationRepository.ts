@@ -1,17 +1,10 @@
+import { getJson } from "../api/http";
 import { tillRader, type ApplikationRad, type ApplikationerSvar } from "../types/applikation";
+import type { ApplikationsVersion } from "../types/leverans";
 
-function delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-/**
- * Behaves like the backend: getAll() returns the response as it comes, grouped
- * by subsystem. Swap the import for an HTTP call later.
- */
-async function getAll(): Promise<ApplikationerSvar> {
-    const module = await import("../mock/applikationer.json");
-    await delay(400);
-    return structuredClone(module.default) as ApplikationerSvar;
+/** The response as it comes, grouped by subsystem */
+function getAll(): Promise<ApplikationerSvar> {
+    return getJson<ApplikationerSvar>("/applikationer");
 }
 
 export const applikationRepository = {
@@ -22,8 +15,16 @@ export const applikationRepository = {
         return tillRader(await getAll());
     },
 
-    /** Resolves to `undefined` when no application has the given id */
+    /**
+     * Resolves to `undefined` when no application has the given id. The
+     * backend has no endpoint for one application, so the list is searched.
+     */
     async getById(id: number): Promise<ApplikationRad | undefined> {
         return (await this.getRows()).find((rad) => rad.id === id);
+    },
+
+    /** The application's versions, newest first, with the packages in each */
+    getVersions(id: number): Promise<ApplikationsVersion[]> {
+        return getJson<ApplikationsVersion[]>(`/applikationer/${id}/versioner`);
     },
 };

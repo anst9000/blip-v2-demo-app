@@ -11,16 +11,16 @@ interface Section {
 
 const sections: Section[] = [
     {
-        title: "Ärenden",
-        text: "Bläddra bland 10 000 påhittade ärenden och öppna ett ärende för att se detaljerna.",
-        to: "/arenden",
-        linkText: "Visa ärenden",
-    },
-    {
         title: "Applikationer",
         text: "Se vilka applikationer som finns, vilket delsystem de hör till och om de går att beställa.",
         to: "/applikationer",
         linkText: "Visa applikationer",
+    },
+    {
+        title: "Leveranser",
+        text: "Paket i exakta versioner som levereras till test, acceptanstest och produktion.",
+        to: "/leveranser",
+        linkText: "Visa leveranser",
     },
     {
         title: "Delsystem",
@@ -36,9 +36,9 @@ const sections: Section[] = [
         <h1>Välkommen till Blip v2-demo</h1>
         <p class="hero__lead">
             En liten exempelapplikation byggd med Vue, TypeScript och Försäkringskassans
-            designsystem. All data kommer från ett mockat repo och är påhittad.
+            designsystem. All data hämtas från en mockad backend och är påhittad.
         </p>
-        <router-link to="/arenden" class="button button--primary">Kom igång</router-link>
+        <router-link to="/applikationer" class="button button--primary">Kom igång</router-link>
     </section>
 
     <div class="sections">
