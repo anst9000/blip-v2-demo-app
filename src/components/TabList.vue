@@ -62,37 +62,58 @@ function onKeydown(event: KeyboardEvent, index: number): void {
 </template>
 
 <style scoped>
+/*
+ * Folder tabs: each tab is a box of its own. The chosen tab has a thick
+ * coloured top edge and the page background, and covers the line under the
+ * row so it joins the content below. The other tabs are shaded and a bit
+ * lower, with link-coloured text to show they can be clicked.
+ */
 .tab-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 0.25rem;
+    align-items: flex-end;
+    gap: 0 0.375rem;
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--fkds-color-border-primary);
+    border-bottom: 2px solid var(--fkds-color-border-strong);
 }
 
 .tab-list__tab {
-    margin-bottom: -1px;
-    padding: 0.75rem 1rem;
-    border: 0;
-    border-bottom: 4px solid transparent;
-    background: transparent;
-    color: var(--fkds-color-text-primary);
+    position: relative;
+    margin-bottom: -2px;
+    padding: 0.625rem 1.25rem;
+    border: 1px solid var(--fkds-color-border-primary);
+    border-bottom: 2px solid var(--fkds-color-border-strong);
+    border-radius: 0.375rem 0.375rem 0 0;
+    /* A shade of the text colour, so the tab is greyer than the page in both light and dark theme */
+    background: color-mix(in srgb, var(--fkds-color-text-primary) 9%, var(--fkds-color-background-primary));
+    color: var(--fkds-color-action-text-primary-default);
     font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
     cursor: pointer;
 }
 
 .tab-list__tab:hover {
-    border-bottom-color: var(--fkds-color-navigation-border-hover);
-    background: var(--fkds-color-navigation-background-hover);
+    background: color-mix(in srgb, var(--fkds-color-text-primary) 18%, var(--fkds-color-background-primary));
+    color: var(--fkds-color-action-text-primary-hover);
 }
 
 .tab-list__tab[aria-selected="true"] {
-    border-bottom-color: var(--fkds-color-navigation-border-selected);
+    z-index: 1;
+    padding-top: 0.875rem;
+    border-color: var(--fkds-color-border-strong);
+    /* The menu's green, pulled towards the text colour: darker in light theme, brighter in dark */
+    border-top: 5px solid color-mix(in srgb, var(--fkds-color-navigation-border-selected) 65%, var(--fkds-color-text-primary));
+    border-bottom-color: var(--fkds-color-background-primary);
+    background: var(--fkds-color-background-primary);
+    color: var(--fkds-color-text-primary);
     font-weight: bold;
+    text-decoration: none;
+    cursor: default;
 }
 
 .tab-list__tab:focus-visible {
     outline: 3px solid var(--fkds-color-action-border-primary-focus);
-    outline-offset: -3px;
+    outline-offset: 2px;
 }
 </style>
