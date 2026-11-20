@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { computed, h } from "vue";
 import { type LocationQuery, useRoute, useRouter } from "vue-router";
-import { FSelectField, defineTableColumns } from "@fkui/vue";
+import { defineTableColumns } from "@fkui/vue";
 import ApplicationGroupedTable from "../components/ApplicationGroupedTable.vue";
 import NewWindowLink from "../components/NewWindowLink.vue";
 import PaginatedList from "../components/PaginatedList.vue";
 import TabList from "../components/TabList.vue";
-import { formatRelease, jaNej, releasePassed, today } from "../composables/formatters";
-import { useQueryParam } from "../composables/useQueryParam";
+import { formatRelease, jaNej, releasePassed } from "../composables/formatters";
 import { applikationRepository } from "../repositories/applikationRepository";
 import type { ApplikationRad } from "../types/applikation";
 import { INTERNT_SYSTEM_NAMN, internSystemUrl } from "../utils/internSystem";
@@ -100,36 +99,6 @@ const columns = defineTableColumns<ApplikationRad>([
 
 /** Shown only when the user chooses them under "Kolumner" */
 const defaultHidden = ["Testapplikation", "Releasebunden", "Arkiverad"];
-
-/*
- * ---------- Filter on the decommissioning release, kept in the URL like the search ----------
- * The yes/no columns have no filters: they can be sorted instead.
- */
-
-const AVVECKLING = ["planerad", "passerad", "ingen"] as const;
-const avvecklingFilter = useQueryParam("avveckling", AVVECKLING);
-
-/** Undefined when no filter is chosen, so the list skips filtering */
-const filter = computed(() => {
-    const avveckling = avvecklingFilter.value;
-    if (avveckling === "") {
-        return undefined;
-    }
-    const todayIso = today();
-    return (row: ApplikationRad): boolean => {
-        const release = row.avvecklingsRelease;
-        switch (avveckling) {
-            case "ingen":
-                return !release;
-            case "planerad":
-                return !!release && !releasePassed(release, todayIso);
-            case "passerad":
-                return !!release && releasePassed(release, todayIso);
-            default:
-                return true;
-        }
-    };
-});
 </script>
 
 <template>
@@ -153,29 +122,10 @@ const filter = computed(() => {
                 list-id="applikationer"
                 :load="applikationRepository.getRows"
                 :columns
-                :filter
                 :default-hidden
                 noun="applikationer"
-            >
-                <template #filters>
-                    <div class="filter-field">
-                        <f-select-field v-model="avvecklingFilter">
-                            <template #label>Avvecklingsrelease</template>
-                            <option value="">Alla</option>
-                            <option value="planerad">Planerad</option>
-                            <option value="passerad">Passerad</option>
-                            <option value="ingen">Ingen</option>
-                        </f-select-field>
-                    </div>
-                </template>
-            </paginated-list>
+            />
         </template>
     </div>
 </template>
 
-<style scoped>
-/* Sits in the list's toolbar row, next to "Rader per sida" */
-.filter-field {
-    flex: 0 0 11rem;
-}
-</style>
