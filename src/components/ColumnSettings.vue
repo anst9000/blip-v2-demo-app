@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { FButton, FCheckboxField, FFieldset, FModal } from "@fkui/vue";
 import type { ColumnOption } from "../composables/useColumnVisibility";
 
-defineProps<{
+const props = defineProps<{
     options: ColumnOption[];
 }>();
 
-const emit = defineEmits<{ showAll: [] }>();
+const emit = defineEmits<{ showAll: []; reset: [] }>();
 
 /** Ids of the visible columns */
 const visibleIds = defineModel<string[]>({ required: true });
 const isOpen = ref(false);
+
+/** E.g. "6 av 9", so it shows that some columns are hidden */
+const shownCount = computed(() => `${visibleIds.value.length} av ${props.options.length}`);
 </script>
 
 <template>
@@ -35,6 +38,7 @@ const isOpen = ref(false);
             />
         </svg>
         Kolumner
+        <span class="column-settings__count">({{ shownCount }})</span>
     </f-button>
 
     <f-modal :is-open size="small" @close="isOpen = false">
@@ -44,7 +48,7 @@ const isOpen = ref(false);
                 <template #label>Visa kolumner</template>
                 <template #description="{ descriptionClass }">
                     <span :class="descriptionClass">
-                        Den första kolumnen länkar till detaljsidan och visas alltid.
+                        Den första kolumnen visas alltid.
                     </span>
                 </template>
                 <f-checkbox-field
@@ -64,6 +68,9 @@ const isOpen = ref(false);
                 <f-button variant="secondary" size="medium" @click="emit('showAll')">
                     Visa alla
                 </f-button>
+                <f-button variant="secondary" size="medium" @click="emit('reset')">
+                    Standardval
+                </f-button>
             </div>
         </template>
     </f-modal>
@@ -75,6 +82,11 @@ const isOpen = ref(false);
     height: 1.25rem;
     margin-right: 0.375rem;
     vertical-align: middle;
+}
+
+.column-settings__count {
+    margin-left: 0.25rem;
+    font-weight: normal;
 }
 
 .column-settings__footer {

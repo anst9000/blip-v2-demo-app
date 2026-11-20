@@ -27,7 +27,7 @@ const props = withDefaults(
         listId: string;
         /** Loads all items, e.g. from a repository */
         load: () => Promise<T[]>;
-        /** The first column should be the link to the detail page */
+        /** The first column should be the link to the detail page; it is always shown */
         columns: Array<TableColumn<T, keyof T>>;
         /** Word used in the caption, e.g. "applikationer" */
         noun: string;
@@ -35,15 +35,18 @@ const props = withDefaults(
         queryPrefix?: string;
         /** Keeps only the rows it returns true for; applied before the search */
         filter?: (row: T) => boolean;
+        /** Headers of the columns that are hidden until the user shows them */
+        defaultHidden?: string[];
     }>(),
-    { queryPrefix: "", filter: undefined },
+    { queryPrefix: "", filter: undefined, defaultHidden: () => [] },
 );
 
 const { data, loading, error } = useResource(props.load);
 
-const { options, visibleIds, visibleColumns, showAll } = useColumnVisibility(
+const { options, visibleIds, visibleColumns, showAll, resetToDefault } = useColumnVisibility(
     () => props.columns,
     `blip-v2-demo:columns:${props.listId}`,
+    () => props.defaultHidden,
 );
 
 /** Every column with a `key` can be sorted by clicking its header */
@@ -119,6 +122,7 @@ const isFiltered = computed(() => filteredData.value.length !== (data.value?.len
             :show-page-size="data.length > PAGE_SIZES[0]"
             :options
             @show-all="showAll"
+            @reset-columns="resetToDefault"
         />
 
         <slot name="filters" />

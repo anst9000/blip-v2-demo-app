@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, h } from "vue";
 import { type LocationQuery, useRoute, useRouter } from "vue-router";
 import { FButton, FSelectField, defineTableColumns } from "@fkui/vue";
 import ApplicationGroupedTable from "../components/ApplicationGroupedTable.vue";
+import NewWindowLink from "../components/NewWindowLink.vue";
 import PaginatedList from "../components/PaginatedList.vue";
 import TabList from "../components/TabList.vue";
 import { formatRelease, jaNej, releasePassed, today } from "../composables/formatters";
 import { useQueryParam } from "../composables/useQueryParam";
 import { applikationRepository } from "../repositories/applikationRepository";
 import type { ApplikationRad } from "../types/applikation";
+import { INTERNT_SYSTEM_NAMN, internSystemUrl } from "../utils/internSystem";
 
 const route = useRoute();
 const router = useRouter();
@@ -59,6 +61,16 @@ const columns = defineTableColumns<ApplikationRad>([
         text: (row) => row.namn,
         href: (row) => router.resolve({ name: "applikation", params: { id: row.id } }).href,
     },
+    {
+        /* The application's page in another internal system, opened in a new window */
+        header: INTERNT_SYSTEM_NAMN,
+        size: "shrink",
+        render: (row) =>
+            h(NewWindowLink, {
+                href: internSystemUrl(row.id),
+                label: `Öppna ${row.namn} i ${INTERNT_SYSTEM_NAMN}`,
+            }),
+    },
     { header: "Delsystem", key: "delsystemNamn", type: "text" },
     { header: "Kod", key: "delsystemKod", type: "text", size: "shrink" },
     { header: "Beställbar", key: "bestallbar", type: "text", size: "shrink", value: (row) => jaNej(row.bestallbar) },
@@ -85,6 +97,9 @@ const columns = defineTableColumns<ApplikationRad>([
         value: avveckling,
     },
 ]);
+
+/** Shown only when the user chooses them under "Kolumner" */
+const defaultHidden = ["Testapplikation", "Releasebunden", "Arkiverad"];
 
 /* ---------- Filters, kept in the URL like the search ---------- */
 
@@ -164,6 +179,7 @@ const filter = computed(() => {
                 :load="applikationRepository.getRows"
                 :columns
                 :filter
+                :default-hidden
                 noun="applikationer"
             >
                 <template #filters>

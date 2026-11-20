@@ -34,36 +34,43 @@ function onSelectedRoute(name: string): void {
     <!-- Shown at the top of the page when the browser loses its connection -->
     <f-offline />
 
-    <f-page-header skip-link="main-content">
-        <router-link to="/" class="app-name">Blip v2-demo</router-link>
-        <template #skip-link-text>Hoppa till huvudinnehåll</template>
-        <template #right>
-            <div class="theme-switch" role="group" aria-label="Tema">
-                <button
-                    v-for="option in themeOptions"
-                    :key="option.value"
-                    type="button"
-                    class="theme-switch__option"
-                    :aria-pressed="theme === option.value"
-                    @click="theme = option.value"
-                >
-                    {{ option.label }}
-                </button>
-            </div>
-        </template>
-    </f-page-header>
-
-    <nav class="app-nav" aria-label="Huvudmeny">
-        <f-navigation-menu
-            :routes="menuItems"
-            :route="selectedSection"
-            @selected-route="onSelectedRoute"
-        />
-    </nav>
-
-    <main id="main-content" class="page" tabindex="-1">
+    <!-- A page that stands in for another application gets no Blip header or menu -->
+    <main v-if="route.meta.standalone" class="page">
         <router-view />
     </main>
+
+    <template v-else>
+        <f-page-header skip-link="main-content">
+            <router-link to="/" class="app-name">Blip v2-demo</router-link>
+            <template #skip-link-text>Hoppa till huvudinnehåll</template>
+            <template #right>
+                <div class="theme-switch" role="group" aria-label="Tema">
+                    <button
+                        v-for="option in themeOptions"
+                        :key="option.value"
+                        type="button"
+                        class="theme-switch__option"
+                        :aria-pressed="theme === option.value"
+                        @click="theme = option.value"
+                    >
+                        {{ option.label }}
+                    </button>
+                </div>
+            </template>
+        </f-page-header>
+
+        <nav class="app-nav" aria-label="Huvudmeny">
+            <f-navigation-menu
+                :routes="menuItems"
+                :route="selectedSection"
+                @selected-route="onSelectedRoute"
+            />
+        </nav>
+
+        <main id="main-content" class="page" tabindex="-1">
+            <router-view />
+        </main>
+    </template>
 </template>
 
 <style scoped>

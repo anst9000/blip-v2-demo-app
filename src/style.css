@@ -18,7 +18,22 @@ body {
     cursor: pointer;
 }
 
+/* Mixed from the theme's colours: the "secondary" background is the same as the page in dark theme */
 .clickable-row:hover > td,
 .clickable-row:hover > th {
-    background-color: var(--fkds-color-background-secondary, #f0f0f0);
+    background-color: color-mix(in srgb, var(--fkds-color-text-primary) 12%, var(--fkds-color-background-primary));
+}
+
+/*
+ * The whole row opens the detail page, so the name in the first column is
+ * plain text rather than looking like the only link. It stays a real link,
+ * so it can be reached with the keyboard and opened in a new tab.
+ */
+.clickable-row > :first-child a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.clickable-row:hover > :first-child a {
+    text-decoration: underline;
 }

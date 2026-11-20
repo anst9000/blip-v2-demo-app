@@ -11,7 +11,7 @@ defineProps<{
     options: ColumnOption[];
 }>();
 
-const emit = defineEmits<{ showAll: [] }>();
+const emit = defineEmits<{ showAll: []; resetColumns: [] }>();
 
 const searchText = defineModel<string>("search", { required: true });
 const itemsPerPage = defineModel<number>("pageSize", { required: true });
@@ -32,7 +32,12 @@ const visibleIds = defineModel<string[]>("visibleIds", { required: true });
             </f-select-field>
         </div>
         <div class="toolbar__settings">
-            <column-settings v-model="visibleIds" :options @show-all="emit('showAll')" />
+            <column-settings
+                v-model="visibleIds"
+                :options
+                @show-all="emit('showAll')"
+                @reset="emit('resetColumns')"
+            />
         </div>
     </div>
 </template>

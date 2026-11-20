@@ -6,6 +6,8 @@ declare module "vue-router" {
         title?: string;
         /** Which navigation menu item is selected */
         section?: string;
+        /** Shown without Blip's header and menu (a page that stands in for another application) */
+        standalone?: boolean;
     }
 }
 
@@ -63,6 +65,14 @@ export const router = createRouter({
             meta: { title: "Delsystem", section: "delsystem" },
         },
         {
+            // Mock of an application's page in another internal system, see utils/internSystem.ts
+            path: "/mock/internt-system/applikation/:id(\\d+)",
+            name: "mock-internt-system",
+            component: () => import("../views/MockInternalSystemView.vue"),
+            props: (route) => ({ id: Number(route.params.id) }),
+            meta: { title: "Internt system (låtsas)", standalone: true },
+        },
+        {
             path: "/:pathMatch(.*)*",
             name: "not-found",
             component: () => import("../views/NotFoundView.vue"),
@@ -75,5 +85,9 @@ export const router = createRouter({
 });
 
 router.afterEach((to) => {
+    if (to.meta.standalone) {
+        document.title = to.meta.title ?? "";
+        return;
+    }
     document.title = to.meta.title ? `${to.meta.title} – Blip v2-demo` : "Blip v2-demo";
 });

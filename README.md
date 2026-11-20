@@ -7,7 +7,8 @@ Based on [fk-demo-app](https://github.com/anst9000/fk-demo-app), with these view
 
 - **Start**
 - **Applikationer**: list with search, filters (archived, orderable, test application,
-  release bound, decommissioning release) and column settings, a tab grouped by delsystem, and a
+  release bound, decommissioning release) and column settings (some columns hidden by default),
+  a link to each application in another internal system, a tab grouped by delsystem, and a
   detail page with the application's packages, versions and deliveries
 - **Leveranser**: list and detail page with the packages in each delivery
 - **Delsystem**: list and detail page (old demo data, not yet linked to the applications)
@@ -37,6 +38,14 @@ delayed 300 ms.
 
 Add `?fel=500` (or another status) to any endpoint to get an error answer. To use a real backend,
 copy `.env.example` to `.env.local` and set `VITE_API_URL`.
+
+## Link to the internal system
+
+The "Internt system" column in the Applikationer list opens the application's page in another
+internal system, in a new window. The address comes from `VITE_INTERNT_SYSTEM_URL`, where `{id}`
+is replaced by the application's id (see `src/utils/internSystem.ts`). Until it is set, the link
+goes to a mock page in this app, `/mock/internt-system/applikation/:id`, which only shows the
+application's name and id.
 
 ## Commands
 
