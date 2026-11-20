@@ -6,10 +6,9 @@ system). All data comes from a mock backend and is made up.
 Based on [fk-demo-app](https://github.com/anst9000/fk-demo-app), with these views:
 
 - **Start**
-- **Applikationer**: list with search, filters (archived, orderable, test application,
-  release bound, decommissioning release) and column settings (some columns hidden by default),
-  a link to each application in another internal system, a tab grouped by delsystem, and a
-  detail page with the application's packages, versions and deliveries
+- **Applikationer**: list with search, a filter on the decommissioning release, column settings
+  (some columns hidden by default), a link to each application in another internal system, a tab
+  grouped by delsystem, and a detail page with the application's packages, versions and deliveries
 - **Leveranser**: list and detail page with the packages in each delivery
 - **Delsystem**: list and detail page (old demo data, not yet linked to the applications)
 

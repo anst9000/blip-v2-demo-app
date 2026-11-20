@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, h } from "vue";
 import { type LocationQuery, useRoute, useRouter } from "vue-router";
-import { FButton, FSelectField, defineTableColumns } from "@fkui/vue";
+import { FSelectField, defineTableColumns } from "@fkui/vue";
 import ApplicationGroupedTable from "../components/ApplicationGroupedTable.vue";
 import NewWindowLink from "../components/NewWindowLink.vue";
 import PaginatedList from "../components/PaginatedList.vue";
@@ -101,47 +101,22 @@ const columns = defineTableColumns<ApplikationRad>([
 /** Shown only when the user chooses them under "Kolumner" */
 const defaultHidden = ["Testapplikation", "Releasebunden", "Arkiverad"];
 
-/* ---------- Filters, kept in the URL like the search ---------- */
-
-type Flag = "arkiverad" | "bestallbar" | "testApplikation" | "releaseBunden";
-
-const JA_NEJ = ["ja", "nej"] as const;
-
-/** One yes/no filter per flag: "" (all), "ja" or "nej" */
-const flagFilters: Array<{ field: Flag; label: string; value: ReturnType<typeof useQueryParam> }> = [
-    { field: "arkiverad", label: "Arkiverad", value: useQueryParam("arkiverad", JA_NEJ) },
-    { field: "bestallbar", label: "Beställbar", value: useQueryParam("bestallbar", JA_NEJ) },
-    { field: "testApplikation", label: "Testapplikation", value: useQueryParam("test", JA_NEJ) },
-    { field: "releaseBunden", label: "Releasebunden", value: useQueryParam("releasebunden", JA_NEJ) },
-];
+/*
+ * ---------- Filter on the decommissioning release, kept in the URL like the search ----------
+ * The yes/no columns have no filters: they can be sorted instead.
+ */
 
 const AVVECKLING = ["planerad", "passerad", "ingen"] as const;
 const avvecklingFilter = useQueryParam("avveckling", AVVECKLING);
 
-const hasFilters = computed(() => avvecklingFilter.value !== "" || flagFilters.some((f) => f.value.value !== ""));
-
-function clearFilters(): void {
-    const query = { ...router.currentRoute.value.query };
-    for (const key of ["arkiverad", "bestallbar", "test", "releasebunden", "avveckling", "sida"]) {
-        delete query[key];
-    }
-    void router.replace({ query });
-}
-
 /** Undefined when no filter is chosen, so the list skips filtering */
 const filter = computed(() => {
-    if (!hasFilters.value) {
+    const avveckling = avvecklingFilter.value;
+    if (avveckling === "") {
         return undefined;
     }
-    const flags = flagFilters
-        .filter((f) => f.value.value !== "")
-        .map((f) => ({ field: f.field, wanted: f.value.value === "ja" }));
-    const avveckling = avvecklingFilter.value;
     const todayIso = today();
     return (row: ApplikationRad): boolean => {
-        if (!flags.every(({ field, wanted }) => row[field] === wanted)) {
-            return false;
-        }
         const release = row.avvecklingsRelease;
         switch (avveckling) {
             case "ingen":
@@ -184,14 +159,6 @@ const filter = computed(() => {
             >
                 <template #filters>
                     <div class="filters" role="group" aria-label="Filter">
-                        <div v-for="flag in flagFilters" :key="flag.field" class="filters__field">
-                            <f-select-field v-model="flag.value.value">
-                                <template #label>{{ flag.label }}</template>
-                                <option value="">Alla</option>
-                                <option value="ja">Ja</option>
-                                <option value="nej">Nej</option>
-                            </f-select-field>
-                        </div>
                         <div class="filters__field">
                             <f-select-field v-model="avvecklingFilter">
                                 <template #label>Avvecklingsrelease</template>
@@ -200,9 +167,6 @@ const filter = computed(() => {
                                 <option value="passerad">Passerad</option>
                                 <option value="ingen">Ingen</option>
                             </f-select-field>
-                        </div>
-                        <div v-if="hasFilters" class="filters__clear">
-                            <f-button variant="tertiary" size="small" @click="clearFilters">Rensa filter</f-button>
                         </div>
                     </div>
                 </template>
@@ -221,9 +185,5 @@ const filter = computed(() => {
 
 .filters__field {
     flex: 0 1 10rem;
-}
-
-.filters__clear {
-    margin-bottom: 1.5rem;
 }
 </style>
