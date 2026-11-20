@@ -158,16 +158,14 @@ const filter = computed(() => {
                 noun="applikationer"
             >
                 <template #filters>
-                    <div class="filters" role="group" aria-label="Filter">
-                        <div class="filters__field">
-                            <f-select-field v-model="avvecklingFilter">
-                                <template #label>Avvecklingsrelease</template>
-                                <option value="">Alla</option>
-                                <option value="planerad">Planerad</option>
-                                <option value="passerad">Passerad</option>
-                                <option value="ingen">Ingen</option>
-                            </f-select-field>
-                        </div>
+                    <div class="filter-field">
+                        <f-select-field v-model="avvecklingFilter">
+                            <template #label>Avvecklingsrelease</template>
+                            <option value="">Alla</option>
+                            <option value="planerad">Planerad</option>
+                            <option value="passerad">Passerad</option>
+                            <option value="ingen">Ingen</option>
+                        </f-select-field>
                     </div>
                 </template>
             </paginated-list>
@@ -176,14 +174,8 @@ const filter = computed(() => {
 </template>
 
 <style scoped>
-.filters {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    gap: 0 1rem;
-}
-
-.filters__field {
-    flex: 0 1 10rem;
+/* Sits in the list's toolbar row, next to "Rader per sida" */
+.filter-field {
+    flex: 0 0 11rem;
 }
 </style>

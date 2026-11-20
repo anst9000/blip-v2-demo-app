@@ -17,20 +17,28 @@ defineProps<{
 </script>
 
 <template>
-    <a
-        :href
-        class="new-window-link"
-        data-new-window
-        target="_blank"
-        rel="noopener"
-        :title="`${label} (nytt fönster)`"
-    >
-        <f-icon name="new-window" class="new-window-link__icon" />
-        <span class="sr-only">{{ label }} (öppnas i nytt fönster)</span>
-    </a>
+    <!-- The wrapper centres the icon in the cell; only the icon itself is the link -->
+    <span class="new-window-link__cell">
+        <a
+            :href
+            class="new-window-link"
+            data-new-window
+            target="_blank"
+            rel="noopener"
+            :title="`${label} (nytt fönster)`"
+        >
+            <f-icon name="new-window" class="new-window-link__icon" />
+            <span class="sr-only">{{ label }} (öppnas i nytt fönster)</span>
+        </a>
+    </span>
 </template>
 
 <style scoped>
+.new-window-link__cell {
+    display: flex;
+    justify-content: center;
+}
+
 .new-window-link {
     display: inline-flex;
     padding: 0.25rem;

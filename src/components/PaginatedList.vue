@@ -123,9 +123,12 @@ const isFiltered = computed(() => filteredData.value.length !== (data.value?.len
             :options
             @show-all="showAll"
             @reset-columns="resetToDefault"
-        />
-
-        <slot name="filters" />
+        >
+            <!-- Filter fields go in the toolbar row, after "Rader per sida" -->
+            <template #filters>
+                <slot name="filters" />
+            </template>
+        </list-toolbar>
 
         <!--
             FSortFilterDataset makes the column headers sortable (FTable talks to it

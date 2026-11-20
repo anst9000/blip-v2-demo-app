@@ -31,6 +31,8 @@ const visibleIds = defineModel<string[]>("visibleIds", { required: true });
                 <option v-for="size in PAGE_SIZES" :key="size" :value="size">{{ size }}</option>
             </f-select-field>
         </div>
+        <!-- Filter fields from the page, on the same row as the search -->
+        <slot name="filters" />
         <div class="toolbar__settings">
             <column-settings
                 v-model="visibleIds"
