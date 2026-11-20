@@ -1,6 +1,10 @@
 <script setup lang="ts">
+/**
+ * All applications grouped by subsystem, in an expandable table with its own
+ * search. Shown in the "Grupperade per delsystem" tab of the Applikationer page.
+ */
 import { computed, nextTick, useTemplateRef, watch } from "vue";
-import { RouterLink, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { FMessageBox, FSearchTextField, FTable, defineTableColumns } from "@fkui/vue";
 import { useListQuery } from "../composables/useListQuery";
 import { useResource } from "../composables/useResource";
@@ -138,13 +142,6 @@ const columns = defineTableColumns<GruppRad>([
 </script>
 
 <template>
-    <h1>Applikationer per delsystem</h1>
-    <p>
-        Samma applikationer som i
-        <router-link :to="{ name: 'applikationer' }">listan över alla applikationer</router-link>,
-        grupperade per delsystem. Expandera ett delsystem för att se dess applikationer.
-    </p>
-
     <p v-if="loading">Hämtar applikationer…</p>
     <f-message-box v-else-if="error" type="error">
         <template #default="{ headingSlotClass }">

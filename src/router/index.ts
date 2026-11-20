@@ -25,10 +25,9 @@ export const router = createRouter({
             meta: { title: "Applikationer", section: "applikationer" },
         },
         {
+            // The grouped view is now a tab on the Applikationer page; old links still work
             path: "/applikationer/per-delsystem",
-            name: "applikationer-delsystem",
-            component: () => import("../views/ApplicationGroupedView.vue"),
-            meta: { title: "Applikationer per delsystem", section: "applikationer" },
+            redirect: (to) => ({ name: "applikationer", query: { ...to.query, visa: "per-delsystem" } }),
         },
         {
             path: "/applikationer/:id(\\d+)",

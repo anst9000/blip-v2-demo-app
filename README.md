@@ -7,7 +7,7 @@ Based on [fk-demo-app](https://github.com/anst9000/fk-demo-app), with these view
 
 - **Start**
 - **Applikationer**: list with search, filters (archived, orderable, test application,
-  release bound, decommissioning release) and column settings, a view grouped by delsystem, and a
+  release bound, decommissioning release) and column settings, a tab grouped by delsystem, and a
   detail page with the application's packages, versions and deliveries
 - **Leveranser**: list and detail page with the packages in each delivery
 - **Delsystem**: list and detail page (old demo data, not yet linked to the applications)

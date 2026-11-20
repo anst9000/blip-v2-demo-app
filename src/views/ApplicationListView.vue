@@ -1,14 +1,45 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { RouterLink, useRouter } from "vue-router";
+import { type LocationQuery, useRoute, useRouter } from "vue-router";
 import { FButton, FSelectField, defineTableColumns } from "@fkui/vue";
+import ApplicationGroupedTable from "../components/ApplicationGroupedTable.vue";
 import PaginatedList from "../components/PaginatedList.vue";
+import TabList from "../components/TabList.vue";
 import { formatRelease, jaNej, releasePassed, today } from "../composables/formatters";
 import { useQueryParam } from "../composables/useQueryParam";
 import { applikationRepository } from "../repositories/applikationRepository";
 import type { ApplikationRad } from "../types/applikation";
 
+const route = useRoute();
 const router = useRouter();
+
+/* ---------- Tabs: all applications, or grouped by subsystem ---------- */
+
+type Tab = "alla" | "per-delsystem";
+
+const tabs: Array<{ value: Tab; label: string }> = [
+    { value: "alla", label: "Alla applikationer" },
+    { value: "per-delsystem", label: "Grupperade per delsystem" },
+];
+
+/**
+ * The chosen tab, kept in the URL (?visa=per-delsystem) so "back" from an
+ * application returns to the same tab. Switching keeps the search but drops
+ * the list's paging, sorting and filters, which only apply to the list.
+ */
+const tab = computed<Tab>({
+    get: () => (route.query.visa === "per-delsystem" ? "per-delsystem" : "alla"),
+    set: (value) => {
+        const query: LocationQuery = {};
+        if (typeof route.query.sok === "string") {
+            query.sok = route.query.sok;
+        }
+        if (value !== "alla") {
+            query.visa = value;
+        }
+        void router.replace({ query });
+    },
+});
 
 /** Shows the release readably; "(passerad)" when an active application is past it */
 function avveckling(row: ApplikationRad): string {
@@ -113,42 +144,55 @@ const filter = computed(() => {
 
 <template>
     <h1>Applikationer</h1>
-    <p>
-        Påhittade applikationer. Klicka på en rad för att se applikationen.
-        <router-link :to="{ name: 'applikationer-delsystem' }">Visa grupperat per delsystem</router-link>.
-    </p>
-    <paginated-list
-        list-id="applikationer"
-        :load="applikationRepository.getRows"
-        :columns
-        :filter
-        noun="applikationer"
+    <p>Påhittade applikationer. Klicka på en applikation för att se den.</p>
+
+    <tab-list v-model="tab" label="Visa applikationer" id-prefix="applikationer" :tabs />
+
+    <div
+        :id="`applikationer-panel-${tab}`"
+        role="tabpanel"
+        :aria-labelledby="`applikationer-tab-${tab}`"
     >
-        <template #filters>
-            <div class="filters" role="group" aria-label="Filter">
-                <div v-for="flag in flagFilters" :key="flag.field" class="filters__field">
-                    <f-select-field v-model="flag.value.value">
-                        <template #label>{{ flag.label }}</template>
-                        <option value="">Alla</option>
-                        <option value="ja">Ja</option>
-                        <option value="nej">Nej</option>
-                    </f-select-field>
-                </div>
-                <div class="filters__field">
-                    <f-select-field v-model="avvecklingFilter">
-                        <template #label>Avvecklingsrelease</template>
-                        <option value="">Alla</option>
-                        <option value="planerad">Planerad</option>
-                        <option value="passerad">Passerad</option>
-                        <option value="ingen">Ingen</option>
-                    </f-select-field>
-                </div>
-                <div v-if="hasFilters" class="filters__clear">
-                    <f-button variant="tertiary" size="small" @click="clearFilters">Rensa filter</f-button>
-                </div>
-            </div>
+        <template v-if="tab === 'per-delsystem'">
+            <p>Expandera ett delsystem för att se dess applikationer.</p>
+            <application-grouped-table />
         </template>
-    </paginated-list>
+
+        <template v-else>
+            <paginated-list
+                list-id="applikationer"
+                :load="applikationRepository.getRows"
+                :columns
+                :filter
+                noun="applikationer"
+            >
+                <template #filters>
+                    <div class="filters" role="group" aria-label="Filter">
+                        <div v-for="flag in flagFilters" :key="flag.field" class="filters__field">
+                            <f-select-field v-model="flag.value.value">
+                                <template #label>{{ flag.label }}</template>
+                                <option value="">Alla</option>
+                                <option value="ja">Ja</option>
+                                <option value="nej">Nej</option>
+                            </f-select-field>
+                        </div>
+                        <div class="filters__field">
+                            <f-select-field v-model="avvecklingFilter">
+                                <template #label>Avvecklingsrelease</template>
+                                <option value="">Alla</option>
+                                <option value="planerad">Planerad</option>
+                                <option value="passerad">Passerad</option>
+                                <option value="ingen">Ingen</option>
+                            </f-select-field>
+                        </div>
+                        <div v-if="hasFilters" class="filters__clear">
+                            <f-button variant="tertiary" size="small" @click="clearFilters">Rensa filter</f-button>
+                        </div>
+                    </div>
+                </template>
+            </paginated-list>
+        </template>
+    </div>
 </template>
 
 <style scoped>
