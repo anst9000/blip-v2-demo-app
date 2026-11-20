@@ -17,8 +17,12 @@ defineProps<{
 </script>
 
 <template>
-    <!-- The wrapper centres the icon in the cell; only the icon itself is the link -->
-    <span class="new-window-link__cell">
+    <!--
+        FTable puts what a render column returns straight into the row, so this is
+        the table cell itself, with FKUI's cell classes for borders and padding.
+        The icon is centred; only the icon itself is the link.
+    -->
+    <td class="table-ng__cell table-ng__cell--anchor new-window-link__cell">
         <a
             :href
             class="new-window-link"
@@ -30,13 +34,13 @@ defineProps<{
             <f-icon name="new-window" class="new-window-link__icon" />
             <span class="sr-only">{{ label }} (öppnas i nytt fönster)</span>
         </a>
-    </span>
+    </td>
 </template>
 
 <style scoped>
 .new-window-link__cell {
-    display: flex;
-    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .new-window-link {
